@@ -1,10 +1,8 @@
 #include "weapon.hpp"
 
-enum Weapon_Type {PAPERCLIP, PLANK, PIPE, CROWBAR};
+Weapon PAPERCLIP {"unfolded paperclip", 1, 0, 0};
+Weapon PLANK {"hardy 2x4 plank", 10, 15, 5};
+Weapon PIPE {"long narrow steel pipe", 15, 10, 3};
+Weapon CROWBAR {"versatile crowbar Dr. F. used to have", 20, 20, 10};
 
-Weapon weapons[] {
-{"unfolded paperclip", 1, 0},
-	{"hardy 2x4 plank", 10, 15},
-	{"long narrow steel pipe", 15, 10},
-	{"versatile crowbar Dr. F. used to have", 20, 20}
-};
+Weapon* weapons[] {&PAPERCLIP, &PLANK, &PIPE, &CROWBAR};

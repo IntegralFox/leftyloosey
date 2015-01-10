@@ -6,11 +6,10 @@ class Bot {
 	int damage;
 	int energy;
 	int level;
-	Weapon_Type carrying;
+	Weapon* carriedWeapon;
 
 public:
 	Bot(std::string, int);
-	int Attack(Bot);
-	int Block();
-	int Damage();
+	int attack(Bot&);
+	int damageWith(Weapon*);
 };
