@@ -1,6 +1,6 @@
 #include "bot.hpp"
 
-Bot::Bot(std::string name, int level) : name(name), level(level) {}
+Bot::Bot(std::string name, int level) : name(name), level(level), damage{0}, energy{100} {}
 
 int Bot::attack(Bot& victim) {
 	energy -= carriedWeapon->energy;

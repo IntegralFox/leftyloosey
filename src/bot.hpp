@@ -1,11 +1,14 @@
+#ifndef BOT
+#define BOT
+
 #include <string>
 #include "weapontypes.hpp"
 
 class Bot {
 	std::string name;
+	int level;
 	int damage;
 	int energy;
-	int level;
 	Weapon* carriedWeapon;
 
 public:
@@ -13,3 +16,5 @@ public:
 	int attack(Bot&);
 	int damageWith(Weapon*);
 };
+
+#endif

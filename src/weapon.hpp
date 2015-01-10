@@ -1,3 +1,6 @@
+#ifndef WEAPON
+#define WEAPON
+
 #include <string>
 
 class Weapon {
@@ -7,3 +10,5 @@ public:
 	int block;
 	int energy;
 };
+
+#endif
