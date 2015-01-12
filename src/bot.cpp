@@ -1,13 +1,53 @@
+#include <random>
 #include "bot.hpp"
+#include "weapontypes.hpp"
 
-Bot::Bot(std::string name, int level) : name(name), level(level), damage{0}, energy{100} {}
-
-int Bot::attack(Bot& victim) {
-	energy -= carriedWeapon->energy;
-	return victim.damageWith(carriedWeapon);
+Bot::Bot(std::string name, int level) : name(name), level(level), damage{0}, energy{100} {
+	std::default_random_engine re {};
+	std::normal_distribution<double> weaponVariance {0, 1};
+	int weaponChoice = level/4 + weaponVariance(re);
+	if (weaponChoice < 0) weaponChoice = 0;
+	if (weaponChoice >= numWeapons) weaponChoice = numWeapons - 1;
+	carryweapon = weapons[weaponChoice];
 }
 
-int Bot::damageWith(Weapon* hitWith) {
-	damage += hitWith->damage - carriedWeapon->block;
-	return hitWith->damage - carriedWeapon->block;
+int Bot::attack(Bot& victim) {
+	int dealDamage = carryweapon->damage;
+	if (energy >= carryweapon->energy) {
+		energy -= carryweapon->energy;
+		dealDamage += level / 5;
+	} else {
+		dealDamage /= 2;
+	}
+	energy -= carryweapon->energy;
+	return victim.wound(dealDamage);
+}
+
+int Bot::wound(int amount) {
+	std::default_random_engine re {};
+	std::uniform_int_distribution<int> variedBlock {level/10, carryweapon->block};
+
+	damage += amount - variedBlock(re);
+	return amount - carryweapon->block;
+}
+
+void Bot::levelUp() {
+	++level;
+}
+
+void Bot::heal(int amount) {
+	damage -= amount;
+	if (damage < 0) damage = 0;
+}
+
+int Bot::energyLeft() {
+	return energy;
+}
+
+int Bot::howDamaged() {
+	return damage;
+}
+
+int Bot::atLevel() {
+	return level;
 }

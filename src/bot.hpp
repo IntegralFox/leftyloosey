@@ -1,20 +1,26 @@
-#ifndef BOT
-#define BOT
+#ifndef BOT_HEADER
+#define BOT_HEADER
 
 #include <string>
-#include "weapontypes.hpp"
+#include "weapon.hpp"
 
 class Bot {
 	std::string name;
 	int level;
 	int damage;
 	int energy;
-	Weapon* carriedWeapon;
+	Weapon* carryweapon;
 
 public:
+	Bot() {}
 	Bot(std::string, int);
 	int attack(Bot&);
-	int damageWith(Weapon*);
+	int wound(int);
+	void heal(int);
+	void levelUp();
+	int energyLeft();
+	int howDamaged();
+	int atLevel();
 };
 
 #endif

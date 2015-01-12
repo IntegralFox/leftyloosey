@@ -1,5 +1,5 @@
-#ifndef WEAPON_TYPES
-#define WEAPON_TYPES
+#ifndef WEAPON_TYPES_HEADER
+#define WEAPON_TYPES_HEADER
 
 #include "weapon.hpp"
 
@@ -8,6 +8,8 @@ Weapon PLANK {"hardy 2x4 plank", 10, 15, 5};
 Weapon PIPE {"long narrow steel pipe", 15, 10, 3};
 Weapon CROWBAR {"versatile crowbar Dr. F. used to have", 20, 20, 10};
 
-Weapon* weapons[] {&PAPERCLIP, &PLANK, &PIPE, &CROWBAR};
+const int numWeapons = 4;
+
+Weapon* weapons[numWeapons] {&PAPERCLIP, &PLANK, &PIPE, &CROWBAR};
 
 #endif
