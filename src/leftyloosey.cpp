@@ -13,7 +13,8 @@ void look(Node room) {
 		std::cout << "There are pointers to higher left and right nodes that "
 			"you might be able to get to if you run fast enough." << std::endl;
 	} else {
-		std::cout << "There are two"
+		std::cout << "There are two pointers to higher left and right nodes."
+			<< std::endl;
 	}
 	if (!room.hasEnemy || room.enemy.howDamaged() > 99) {
 		if (room.scrap && !room.cells) {
