@@ -2,7 +2,7 @@
 #include "bot.hpp"
 #include "weapontypes.hpp"
 
-Bot::Bot(std::string name, int level) : name(name), level(level), damage{0}, energy{100} {
+Bot::Bot(std::string name, int level) : name {name}, level {level}, damage {0}, energy {100} {
 	std::default_random_engine re {};
 	std::normal_distribution<double> weaponVariance {0, 1};
 	int weaponChoice = level/4 + weaponVariance(re);

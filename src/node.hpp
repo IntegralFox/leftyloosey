@@ -9,6 +9,7 @@ public:
 	Bot enemy;
 	int scrap;
 	int cells;
+	int level;
 
 	Node(int);
 };

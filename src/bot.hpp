@@ -21,6 +21,8 @@ public:
 	int energyLeft();
 	int howDamaged();
 	int atLevel();
+	std::string called() { return name;	}
+	std::string carrying() { return carryweapon->name; }
 };
 
 #endif
