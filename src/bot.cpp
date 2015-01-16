@@ -1,11 +1,10 @@
-#include <random>
+#include "easyrandom.hpp"
 #include "bot.hpp"
 #include "weapontypes.hpp"
 
 Bot::Bot(std::string name, int level) : name {name}, level {level}, damage {0}, energy {100} {
-	std::default_random_engine re {};
-	std::normal_distribution<double> weaponVariance {0, 1};
-	int weaponChoice = level/4 + weaponVariance(re);
+	PRNGNormal<double> weaponVariance {0, 1};
+	int weaponChoice = level/4 + weaponVariance();
 	if (weaponChoice < 0) weaponChoice = 0;
 	if (weaponChoice >= numWeapons) weaponChoice = numWeapons - 1;
 	carryweapon = weapons[weaponChoice];
@@ -40,14 +39,14 @@ void Bot::heal(int amount) {
 	if (damage < 0) damage = 0;
 }
 
-int Bot::energyLeft() {
+int const Bot::energyLeft() {
 	return energy;
 }
 
-int Bot::howDamaged() {
+int const Bot::howDamaged() {
 	return damage;
 }
 
-int Bot::atLevel() {
+int const Bot::atLevel() {
 	return level;
 }

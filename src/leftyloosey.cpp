@@ -1,9 +1,9 @@
 #include <iostream>
-#include <random>
 #include <string>
 #include <sstream>
 #include "bot.hpp"
 #include "node.hpp"
+#include "easyrandom.hpp"
 
 void look(Node room) {
 	std::cout << "You're in a level " << room.level << " node." << std::endl;
@@ -30,8 +30,7 @@ void look(Node room) {
 }
 
 int main() {
-	std::default_random_engine re {};
-	std::uniform_int_distribution<int> random {0, 99};
+	PRNGUniform<int> percent {};
 	std::string name, line;
 	Node currentNode {1};
 	std::cout << "What do you want to call your robot?" << std::endl;
@@ -42,8 +41,8 @@ int main() {
 	std::cout << "\n\nYour robot, " << name <<
 		", drops into the root of a brave new world." << std::endl;
 
-	if (random(re) < 10) {
-		std::cout << "\t\t\t\t...and dies on impact." << std::endl;
+	if (percent() < 10) {
+		std::cout << "   ...and dies on impact." << std::endl;
 		return 0;
 	}
 

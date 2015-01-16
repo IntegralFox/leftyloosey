@@ -18,11 +18,11 @@ public:
 	int wound(int);
 	void heal(int);
 	void levelUp();
-	int energyLeft();
-	int howDamaged();
-	int atLevel();
-	std::string called() { return name;	}
-	std::string carrying() { return carryweapon->name; }
+	int const energyLeft();
+	int const howDamaged();
+	int const atLevel();
+	std::string const called() { return name;	}
+	std::string const carrying() { return carryweapon->name; }
 };
 
 #endif
