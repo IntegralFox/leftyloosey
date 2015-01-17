@@ -50,3 +50,5 @@ int const Bot::howDamaged() {
 int const Bot::atLevel() {
 	return level;
 }
+
+// If find the lack of comments...   disturbing...

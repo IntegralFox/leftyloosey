@@ -1,3 +1,7 @@
+/* Class hierarchy to make the annoyingly fine-grained random utilities of
+   C++11 much easier to use. Also Templates! Inheritance!
+   Ill-advised casting practices! */
+
 #ifndef EASY_RANDOM_HEADER
 #define EASY_RANDOM_HEADER
 

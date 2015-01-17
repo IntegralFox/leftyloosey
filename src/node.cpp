@@ -13,3 +13,5 @@ Node::Node(int level) : level {level} {
 	scrap = (percent() < 20) ? (percent() % 20) : 0;
 	cells = (percent() < 50) ? (percent() % 15) : 0;
 }
+
+// ...but not so disturbing that I'm going to fix it...
