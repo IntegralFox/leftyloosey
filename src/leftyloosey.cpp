@@ -11,26 +11,24 @@
 
 void look(Node room) {
 	std::cout << "You're in a level " << room.level << " node." << std::endl;
-	if (room.hasEnemy && room.enemy.howDamaged() < 100) {
+	if (room.hasEnemy && !room.enemy.isDead()) {
 		std::cout << "In the node with you is a " << room.enemy.called() <<
-			" carrying a " << room.enemy.carrying() << "." << std::endl;
-		std::cout << "There are pointers to higher left and right nodes that "
-			"you might be able to get to if you run fast enough." << std::endl;
-	} else {
-		std::cout << "There are two pointers to higher left and right nodes."
-			<< std::endl;
+			std::endl << " carrying a " << room.enemy.carrying() << "." << std::endl;
+	} else if (room.hasEnemy && room.enemy.isDead()) {
+		std::cout << "A " << room.enemy.called() << " lies dead on the floor with a " <<
+			std::endl << room.enemy.carrying() << " by it's side." << std::endl;
+
 	}
-	if (!room.hasEnemy || room.enemy.howDamaged() > 99) {
-		if (room.scrap && !room.cells) {
+	if (!room.hasEnemy || room.enemy.isDead()) {
+		if (room.scrap && room.cells) {
+			std::cout << "There are some cells and scrap lying on the floor." << std::endl;
+		} else if (room.cells) {
+			std::cout << "There are some cells lying on the floor." << std::endl;
+		} else if (room.scrap) {
 			std::cout << "There is some scrap lying on the floor." << std::endl;
-		} else if (!room.scrap && room.cells) {
-			std::cout << "There are some cells lying on the floor."
-				<< std::endl;
-		} else {
-			std::cout << "There are some cells and scrap lying on the floor."
-				<< std::endl;
 		}
 	}
+	std::cout << "There are two pointers to higher left and right nodes." << std::endl;
 }
 
 void sayWat() {
@@ -45,36 +43,58 @@ void sayWat() {
 void check(Bot actor) {
 	std::cout << actor.called() << " is at level " << actor.atLevel() << "." << std::endl <<
 		"It has " << actor.howDamaged() << " damage." << std::endl <<
-		"It's power level is at " << actor.energyLeft() << "." << std::endl;
+		"Its power level is at " << actor.energyLeft() << "." << std::endl;
+}
+
+void clear() {
+	for (int i = 50; i --> 0;)
+		std::cout << std::endl;
 }
 
 int main() {
 	PRNGUniform<int> percent {};
 	std::string name, line;
 	Node room {1};
-	std::cout << "What do you want to call your robot?" << std::endl;
+	int nodeLevel = 1;
+	clear();
+	std::cout << "What do you want to call your robot?" << std::endl << std::endl << "> ";
 	std::getline(std::cin, name);
 
-	Bot player {name, 1};
+	Bot player {name, 1, 20};
 
-	std::cout << "\n\nYour robot, " << name <<
-		", drops into the root of a brave new world." << std::endl;
+	clear();
+	std::cout << "Your robot, " << name <<
+		", drops into the root of a brave new world." << std::endl << std::endl << "> ";
 
 	if (percent() < 10) {
 		std::cout << "   ...and dies on impact." << std::endl;
 		return 0;
 	}
 
-	while (player.howDamaged() < 100 && getline(std::cin, line)) {
+	while (!player.isDead() && getline(std::cin, line)) {
 		std::istringstream sline {line};
 		std::string word;
+
+		clear();
+
 		if (sline >> word) {
 			if (word == "look") {
 				look(room);
 			} else if (word == "attack") {
-				if (room.hasEnemy && room.enemy.howDamaged() < 100)
+				if (room.hasEnemy && !room.enemy.isDead()) {
 					player.attack(room.enemy);
-				else if (room.hasEnemy) {
+					if (room.enemy.isDead()) {
+						std::cout << "The " << room.enemy.called() << " keels over from the damage." << std::endl;
+						player.levelUp();
+						std::cout << player.called() << " leveled up to level " << player.atLevel() << "." << std::endl;
+					} else {
+						if (percent() < player.atLevel()) {
+							std::cout << "The " << room.enemy.called() << " is staggered and does not retaliate." << std::endl;
+						} else {
+							room.enemy.attack(player);
+						}
+					}
+				} else if (room.hasEnemy) {
 					std::cout << "The " << room.enemy.called() << " is dead." << std::endl;
 				} else {
 					std::cout << "There is nothing to attack..." << std::endl;
@@ -96,6 +116,12 @@ int main() {
 						} else {
 							sayWat();
 						}
+					} else if (word == "weapon" && room.hasEnemy) {
+						if (room.enemy.isDead()) {
+							player.takeWeapon(room.enemy);
+						} else {
+							std::cout << "That's probably not a good idea while it's still up and about." << std::endl;
+						}
 					} else {
 						sayWat();
 					}
@@ -105,8 +131,9 @@ int main() {
 			} else if (word == "go") {
 				if (sline >> word) {
 					if (word == "left" || word == "right") {
-						if (!room.hasEnemy || room.enemy.howDamaged() > 99) {
-							room = Node {player.atLevel()};
+						if (!room.hasEnemy || room.enemy.isDead()) {
+							std::cout << "You followed the " << word << " pointer." << std::endl;
+							room = Node {++nodeLevel};
 						} else {
 							std::cout << "There's a " << room.enemy.called() << " in the way." << std::endl;
 						}
@@ -138,7 +165,10 @@ int main() {
 				}
 			} else {
 				sayWat();
-			}	
-		}
-	}
-}
+			}
+		} // end word extract
+		std::cout << std::endl << "> ";
+	} // end while
+
+	std::cout << player.called() << " has taken too much damage and keels over." << std::endl;
+} // end main
