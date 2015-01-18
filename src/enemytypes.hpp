@@ -8,7 +8,7 @@ const int numEnemies = 3;
 std::string enemies[numEnemies] {
 	"washing machine with legs",
 	"VCR with the wrong time",
-	"supercomputer controlling a Nintendo R.O.B."
+	"Nintendo R.O.B. controlled by a supercomputer"
 };
 
 #endif
