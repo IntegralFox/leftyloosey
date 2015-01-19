@@ -25,6 +25,8 @@ public:
 	int const atLevel();
 	std::string const called() { return name; }
 	std::string const carrying() { return carryweapon->name; }
+	bool hasEnergy();
+	void drain(int);
 	bool isDead();
 	void takeWeapon(Bot&);
 };

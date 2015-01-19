@@ -71,7 +71,7 @@ int main() {
 		return 0;
 	}
 
-	while (!player.isDead() && getline(std::cin, line)) {
+	while (!player.isDead() && player.hasEnergy() && getline(std::cin, line)) {
 		std::istringstream sline {line};
 		std::string word;
 
@@ -134,6 +134,7 @@ int main() {
 						if (!room.hasEnemy || room.enemy.isDead()) {
 							std::cout << "You followed the " << word << " pointer." << std::endl;
 							room = Node {++nodeLevel};
+							player.drain(3);
 						} else {
 							std::cout << "There's a " << room.enemy.called() << " in the way." << std::endl;
 						}
@@ -170,5 +171,10 @@ int main() {
 		std::cout << std::endl << "> ";
 	} // end while
 
-	std::cout << player.called() << " has taken too much damage and keels over." << std::endl;
+	if (player.hasEnergy()) {
+		std::cout << player.called() << " has taken too much damage and keels over." << std::endl;
+	} else {
+		std::cout << player.called() << " ran out of energy and shut down." << std::endl;
+	}
+
 } // end main

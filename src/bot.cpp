@@ -68,4 +68,13 @@ void Bot::takeWeapon(Bot& victim) {
 	carryweapon = victim.carryweapon;
 	std::cout << "You took the " << victim.called() << "'s " << victim.carrying() << "." << std::endl;
 }
+
+bool Bot::hasEnergy() {
+	return energy > 0;
+}
+
+void Bot::drain(int amount) {
+	energy -= amount;
+	if (energy < 0) energy = 0;
+}
 // If find the lack of comments...   disturbing...
