@@ -13,7 +13,7 @@ void look(Node room) {
 	std::cout << "You're in a level " << room.level << " node." << std::endl;
 	if (room.hasEnemy && !room.enemy.isDead()) {
 		std::cout << "In the node with you is a " << room.enemy.called() <<
-			std::endl << " carrying a " << room.enemy.carrying() << "." << std::endl;
+			std::endl << "carrying a " << room.enemy.carrying() << "." << std::endl;
 	} else if (room.hasEnemy && room.enemy.isDead()) {
 		std::cout << "A " << room.enemy.called() << " lies dead on the floor with a " <<
 			std::endl << room.enemy.carrying() << " by it's side." << std::endl;
