@@ -51,6 +51,15 @@ void clear() {
 		std::cout << std::endl;
 }
 
+void halp() {
+	std::cout << "Have you tried?" << std::endl <<
+	"look" << std::endl <<
+	"check [enemy]" << std::endl <<
+	"take {scrap, cells, weapon}" << std::endl <<
+	"attack" << std::endl <<
+	"go {left, right}" << std::endl;
+}
+
 int main() {
 	PRNGUniform<int> percent {};
 	std::string name, line;
@@ -104,6 +113,7 @@ int main() {
 					if (word == "cells") {
 						if (room.cells) {
 							std::cout << "You took " << room.cells << " cells." << std::endl;
+							player.charge(room.cells);
 							room.cells = 0;
 						} else {
 							sayWat();
@@ -164,6 +174,8 @@ int main() {
 				} else {
 					check(player);
 				}
+			} else if (word == "help" || word == "halp" || word =="man") {
+				halp();
 			} else {
 				sayWat();
 			}

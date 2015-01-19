@@ -3,7 +3,7 @@
 #include "bot.hpp"
 #include "weapontypes.hpp"
 
-Bot::Bot(std::string name, int level, int damageLimit) : name {name}, level {level}, damage {0}, energy {100} {
+Bot::Bot(std::string name, int level, int damageLimit) : damage {0}, energy {100}, level {level}, name {name} {
 	PRNGNormal<double> weaponVariance {0, 1};
 	PRNGUniform<int> damageVariance {1, level};
 	int weaponChoice = level/4 + weaponVariance();
@@ -77,4 +77,10 @@ void Bot::drain(int amount) {
 	energy -= amount;
 	if (energy < 0) energy = 0;
 }
+
+void Bot::charge(int amount) {
+	energy += amount;
+	if (energy > 100) energy = 100;
+}
+
 // If find the lack of comments...   disturbing...
